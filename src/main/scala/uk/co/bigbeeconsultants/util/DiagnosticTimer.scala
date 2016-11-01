@@ -38,20 +38,17 @@
 // THE SOFTWARE.
 //-----------------------------------------------------------------------------
 
-// see https://bitbucket.org/rickb777/bee-client
-//scalastyle:off
-
-package uk.co.bigbeeconsultants.http.util
+package uk.co.bigbeeconsultants.util
 
 /**
-  * Provides a simple diagnostic timer for evaluating execution times of sections of code.
-  * The measurement precision is to the nearest microsecond.
-  *
-  * Simply create an instance before the code under test and observe the duration afterwards.
-  *
-  * This class is included here to avoid dependencies on external libraries (e.g. JodaTime)
-  * for such a simple task.
-  */
+ * Provides a simple diagnostic timer for evaluating execution times of sections of code.
+ * The measurement precision is to the nearest microsecond.
+ *
+ * Simply create an instance before the code under test and observe the duration afterwards.
+ *
+ * This class is included here to avoid dependencies on external libraries (e.g. JodaTime)
+ * for such a simple task.
+ */
 final class DiagnosticTimer {
 
   /** The time at which the timer was started, measured in arbitrary ticks. */
@@ -60,10 +57,10 @@ final class DiagnosticTimer {
   private def now = System.nanoTime() / DiagnosticTimer.thousand
 
   /** The duration since the timer was started, measured in microseconds. */
-  def duration: Duration = new Duration(now - start)
+  def duration = new Duration(now - start)
 
   /** Gets the duration since the timer was started, formatted for humans to read. */
-  override def toString: String = duration.toString
+  override def toString = duration.toString
 }
 
 object DiagnosticTimer {
@@ -76,37 +73,36 @@ object DiagnosticTimer {
 }
 
 /**
-  * Provides a simple container for time durations measured in microseconds. Possible operations include
-  * summing durations together and calculating averages.
-  *
-  * This is a bit like the class of the same name in Joda Time, except that the resolution is microseconds
-  * in this case.
-  *
-  * @param microseconds a number representing a time duration; negative numbers are unusual but not prohibited.
-  */
+ * Provides a simple container for time durations measured in microseconds. Possible operations include
+ * summing durations together and calculating averages.
+ *
+ * This is a bit like the class of the same name in Joda Time, except that the resolution is microseconds
+ * in this case.
+ * @param microseconds a number representing a time duration; negative numbers are unusual but not prohibited.
+ */
 case class Duration(microseconds: Long) extends Ordered[Duration] {
 
   import DiagnosticTimer._
 
-  def +(microseconds: Long): Duration = new Duration(microseconds + this.microseconds)
+  def +(microseconds: Long) = new Duration(microseconds + this.microseconds)
 
-  def +(duration: Duration): Duration = new Duration(this.microseconds + duration.microseconds)
+  def +(duration: Duration) = new Duration(this.microseconds + duration.microseconds)
 
-  def -(duration: Duration): Duration = new Duration(this.microseconds - duration.microseconds)
+  def -(duration: Duration) = new Duration(this.microseconds - duration.microseconds)
 
-  def -(microseconds: Long): Duration = new Duration(this.microseconds - microseconds)
+  def -(microseconds: Long) = new Duration(this.microseconds - microseconds)
 
-  def *(factor: Int): Duration = new Duration(this.microseconds * factor)
+  def *(factor: Int) = new Duration(this.microseconds * factor)
 
-  def /(divisor: Int): Duration = new Duration(this.microseconds / divisor)
+  def /(divisor: Int) = new Duration(this.microseconds / divisor)
 
-  def abs: Duration = if (microseconds < 0) new Duration(-microseconds) else this
+  def abs = if (microseconds < 0) new Duration(-microseconds) else this
 
-  def max(other: Duration): Duration = if (this.microseconds < other.microseconds) other else this
+  def max(other: Duration) = if (this.microseconds < other.microseconds) other else this
 
-  def min(other: Duration): Duration = if (this.microseconds < other.microseconds) this else other
+  def min(other: Duration) = if (this.microseconds < other.microseconds) this else other
 
-  def compare(that: Duration): Int = this.microseconds.compare(that.microseconds)
+  def compare(that: Duration) = this.microseconds.compare(that.microseconds)
 
   override def toString: String =
     if (microseconds >= hundredMillion) {
@@ -124,7 +120,7 @@ case class Duration(microseconds: Long) extends Ordered[Duration] {
       val f = roundup - (th * thousand)
       th + "." + f.toString.take(1) + "ms"
     } else
-      microseconds + "µs"
+      microseconds + "μs"
 }
 
 object Duration {

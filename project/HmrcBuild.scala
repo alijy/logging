@@ -50,8 +50,10 @@ private object AppDependencies {
   object Test {
     def apply() = new TestDependencies {
       override lazy val test = Seq(
-        "ch.qos.logback" % "logback-core" % "1.1.7",
-        "ch.qos.logback" % "logback-classic" % "1.1.7"
+        "org.scalatest" %% "scalatest" % "2.2.6" % scope,
+        "org.pegdown" % "pegdown" % "1.4.2" % scope,
+        "ch.qos.logback" % "logback-core" % "1.1.7" % scope,
+        "ch.qos.logback" % "logback-classic" % "1.1.7" % scope
       )
     }.test
   }

@@ -1,5 +1,5 @@
 /*
- * Copyright 2016 HM Revenue & Customs
+ * Copyright 2017 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -49,6 +49,27 @@ object Stdout extends SimpleLogger {
     println("ERROR: " + msg)
     t.printStackTrace(System.out)
   }
+  
+  override def debug(format: String, arguments: AnyRef*) {
+    val tp = MessageFormatter.arrayFormat(format, arguments.toArray)
+    println("DEBUG: " + tp.getMessage)
+  }
+
+  override def debug(msg: String, t: Throwable) {
+    println("DEBUG: " + msg)
+    t.printStackTrace(System.out)
+  }
+
+  override def trace(format: String, arguments: AnyRef*) {
+    val tp = MessageFormatter.arrayFormat(format, arguments.toArray)
+    println("TRACE: " + tp.getMessage)
+  }
+
+  override def trace(msg: String, t: Throwable) {
+    println("TRACE: " + msg)
+    t.printStackTrace(System.out)
+  }
+
 }
 
 
@@ -67,4 +88,13 @@ object BlackHole extends SimpleLogger {
   override def error(format: String, arguments: AnyRef*) {}
 
   override def error(msg: String, t: Throwable) {}
+
+  override def debug(format: String, arguments: AnyRef*) {}
+
+  override def debug(msg: String, t: Throwable) {}
+
+  override def trace(format: String, arguments: AnyRef*) {}
+
+  override def trace(msg: String, t: Throwable) {}
+  
 }

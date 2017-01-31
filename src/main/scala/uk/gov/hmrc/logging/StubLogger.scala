@@ -1,5 +1,5 @@
 /*
- * Copyright 2016 HM Revenue & Customs
+ * Copyright 2017 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -29,12 +29,16 @@ class StubLogger(echo: Boolean = false) extends SimpleLogger {
   private val _infos = new ConcurrentLinkedQueue[LogEntry]()
   private val _warns = new ConcurrentLinkedQueue[LogEntry]()
   private val _errors = new ConcurrentLinkedQueue[LogEntry]()
+  private val _debugs = new ConcurrentLinkedQueue[LogEntry]()
+  private val _traces = new ConcurrentLinkedQueue[LogEntry]()
 
   def clear() {
     synchronized {
       _infos.clear()
       _warns.clear()
       _errors.clear()
+      _debugs.clear()
+      _traces.clear()
     }
   }
 
@@ -44,7 +48,11 @@ class StubLogger(echo: Boolean = false) extends SimpleLogger {
 
   def errors = _errors.asScala.toList
 
-  def all = errors ++ warns ++ infos
+  def debugs = _debugs.asScala.toList
+
+  def traces = _traces.asScala.toList
+
+  def all = traces ++ debugs ++ errors ++ warns ++ infos
 
   def size = all.size
 
@@ -83,6 +91,30 @@ class StubLogger(echo: Boolean = false) extends SimpleLogger {
   def error(msg: String, t: Throwable) {
     val entry = LogEntry("ERROR", msg, Seq(), Some(t))
     _errors.add(entry)
+    if (echo) entry.dump()
+  }
+
+  def debug(format: String, arguments: AnyRef*) {
+    val entry = LogEntry("DEBUG", format, arguments.toSeq, None)
+    _debugs.add(entry)
+    if (echo) entry.dump()
+  }
+
+  def debug(msg: String, t: Throwable) {
+    val entry = LogEntry("DEBUG", msg, Seq(), Some(t))
+    _debugs.add(entry)
+    if (echo) entry.dump()
+  }
+
+  def trace(format: String, arguments: AnyRef*) {
+    val entry = LogEntry("TRACE", format, arguments.toSeq, None)
+    _traces.add(entry)
+    if (echo) entry.dump()
+  }
+
+  def trace(msg: String, t: Throwable) {
+    val entry = LogEntry("TRACE", msg, Seq(), Some(t))
+    _traces.add(entry)
     if (echo) entry.dump()
   }
 }

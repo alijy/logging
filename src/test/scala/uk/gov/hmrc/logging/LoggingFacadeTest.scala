@@ -1,5 +1,5 @@
 /*
- * Copyright 2016 HM Revenue & Customs
+ * Copyright 2017 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -52,5 +52,15 @@ object LoggingFacadeTest extends App {
     lg.error("T5 {} {}", "a", "b")
     lg.error("T5 {} {} {}", "a", "b", "c")
     lg.error("T6", new Exception("foo3"))
+
+    lg.debug("T7 {}", "a")
+    lg.debug("T7 {} {}", "a", "b")
+    lg.debug("T7 {} {} {}", "a", "b", "c")
+    lg.debug("T8", new Exception("foo4"))
+
+    lg.trace("T9 {}", "a")
+    lg.trace("T9 {} {}", "a", "b")
+    lg.trace("T9 {} {} {}", "a", "b", "c")
+    lg.trace("T10", new Exception("foo5"))
   }
 }

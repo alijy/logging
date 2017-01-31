@@ -1,5 +1,5 @@
 /*
- * Copyright 2016 HM Revenue & Customs
+ * Copyright 2017 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -31,6 +31,14 @@ trait SimpleLogger {
   def error(format: String, arguments: AnyRef*)
 
   def error(msg: String, t: Throwable)
+
+  def debug(format: String, arguments: AnyRef*)
+
+  def debug(msg: String, t: Throwable)
+
+  def trace(format: String, arguments: AnyRef*)
+
+  def trace(msg: String, t: Throwable)
 }
 
 
@@ -59,5 +67,20 @@ class LoggerFacade(underlying: Logger) extends SimpleLogger {
   override def error(msg: String, t: Throwable) {
     underlying.error(msg, t)
   }
-}
 
+  override def debug(format: String, arguments: AnyRef*) {
+    underlying.debug(format, arguments: _*)
+  }
+
+  override def debug(msg: String, t: Throwable) {
+    underlying.debug(msg, t)
+  }
+  
+  override def trace(format: String, arguments: AnyRef*) {
+    underlying.trace(format, arguments: _*)
+  }
+
+  override def trace(msg: String, t: Throwable) {
+    underlying.trace(msg, t)
+  }
+}

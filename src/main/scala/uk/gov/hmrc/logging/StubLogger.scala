@@ -30,7 +30,6 @@ class StubLogger(echo: Boolean = false) extends SimpleLogger {
   private val _warns = new ConcurrentLinkedQueue[LogEntry]()
   private val _errors = new ConcurrentLinkedQueue[LogEntry]()
   private val _debugs = new ConcurrentLinkedQueue[LogEntry]()
-  private val _traces = new ConcurrentLinkedQueue[LogEntry]()
 
   def clear() {
     synchronized {
@@ -38,7 +37,6 @@ class StubLogger(echo: Boolean = false) extends SimpleLogger {
       _warns.clear()
       _errors.clear()
       _debugs.clear()
-      _traces.clear()
     }
   }
 
@@ -50,9 +48,7 @@ class StubLogger(echo: Boolean = false) extends SimpleLogger {
 
   def debugs = _debugs.asScala.toList
 
-  def traces = _traces.asScala.toList
-
-  def all = traces ++ debugs ++ errors ++ warns ++ infos
+  def all = debugs ++ errors ++ warns ++ infos
 
   def size = all.size
 
@@ -103,18 +99,6 @@ class StubLogger(echo: Boolean = false) extends SimpleLogger {
   def debug(msg: String, t: Throwable) {
     val entry = LogEntry("DEBUG", msg, Seq(), Some(t))
     _debugs.add(entry)
-    if (echo) entry.dump()
-  }
-
-  def trace(format: String, arguments: AnyRef*) {
-    val entry = LogEntry("TRACE", format, arguments.toSeq, None)
-    _traces.add(entry)
-    if (echo) entry.dump()
-  }
-
-  def trace(msg: String, t: Throwable) {
-    val entry = LogEntry("TRACE", msg, Seq(), Some(t))
-    _traces.add(entry)
     if (echo) entry.dump()
   }
 }

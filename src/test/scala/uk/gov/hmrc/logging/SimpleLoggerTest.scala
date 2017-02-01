@@ -42,10 +42,6 @@ class SimpleLoggerTest extends FunSuite {
     assert(stub.debugMsg === "")
     assert(stub.debugArgs === Seq())
     assert(stub.debugTh === stub.unset)
-
-    assert(stub.traceMsg === "")
-    assert(stub.traceArgs === Seq())
-    assert(stub.traceTh === stub.unset)
   }
 
   test("warn with args") {
@@ -68,10 +64,6 @@ class SimpleLoggerTest extends FunSuite {
     assert(stub.debugMsg === "")
     assert(stub.debugArgs === Seq())
     assert(stub.debugTh === stub.unset)
-
-    assert(stub.traceMsg === "")
-    assert(stub.traceArgs === Seq())
-    assert(stub.traceTh === stub.unset)
   }
 
   test("error with args") {
@@ -94,11 +86,7 @@ class SimpleLoggerTest extends FunSuite {
     assert(stub.debugMsg === "")
     assert(stub.debugArgs === Seq())
     assert(stub.debugTh === stub.unset)
-
-    assert(stub.traceMsg === "")
-    assert(stub.traceArgs === Seq())
-    assert(stub.traceTh === stub.unset)
-}
+  }
 
   test("debug with args") {
     val stub = new Slf4jStub()
@@ -116,39 +104,7 @@ class SimpleLoggerTest extends FunSuite {
     assert(stub.debugMsg === "abc")
     assert(stub.debugArgs === Seq("x", "y", "z"))
     assert(stub.debugTh === stub.unset)
-
-    assert(stub.traceMsg === "")
-    assert(stub.traceArgs === Seq())
-    assert(stub.traceTh === stub.unset)
   }
-
-
-  test("trace with args") {
-    val stub = new Slf4jStub()
-    val log = new LoggerFacade(stub)
-    log.trace("abc", "x", "y", "z")
-
-    assert(stub.infoMsg === "")
-    assert(stub.infoArgs === Seq())
-    assert(stub.infoTh === stub.unset)
-
-    assert(stub.warnMsg === "")
-    assert(stub.warnArgs === Seq())
-    assert(stub.warnTh === stub.unset)
-  
-    assert(stub.errorMsg === "")
-    assert(stub.errorArgs === Seq())
-    assert(stub.errorTh === stub.unset)
-
-    assert(stub.debugMsg === "")
-    assert(stub.debugArgs === Seq())
-    assert(stub.debugTh === stub.unset)
-    
-    assert(stub.traceMsg === "abc")
-    assert(stub.traceArgs === Seq("x", "y", "z"))
-    assert(stub.traceTh === stub.unset)
-  }
-
 
   test("info with exception") {
     val stub = new Slf4jStub()
@@ -170,10 +126,6 @@ class SimpleLoggerTest extends FunSuite {
     assert(stub.debugMsg === "")
     assert(stub.debugArgs === Seq())
     assert(stub.debugTh === stub.unset)
-
-    assert(stub.traceMsg === "")
-    assert(stub.traceArgs === Seq())
-    assert(stub.traceTh === stub.unset)
   }
 
   test("warn with exception") {
@@ -196,10 +148,6 @@ class SimpleLoggerTest extends FunSuite {
     assert(stub.debugMsg === "")
     assert(stub.debugArgs === Seq())
     assert(stub.debugTh === stub.unset)
-
-    assert(stub.traceMsg === "")
-    assert(stub.traceArgs === Seq())
-    assert(stub.traceTh === stub.unset)
   }
 
   test("error with exception") {
@@ -222,10 +170,6 @@ class SimpleLoggerTest extends FunSuite {
     assert(stub.debugMsg === "")
     assert(stub.debugArgs === Seq())
     assert(stub.debugTh === stub.unset)
-
-    assert(stub.traceMsg === "")
-    assert(stub.traceArgs === Seq())
-    assert(stub.traceTh === stub.unset)
   }
 
   test("debug with exception") {
@@ -248,36 +192,6 @@ class SimpleLoggerTest extends FunSuite {
     assert(stub.debugMsg === "abc")
     assert(stub.debugArgs === Seq())
     assert(stub.debugTh === exception)
-
-    assert(stub.traceMsg === "")
-    assert(stub.traceArgs === Seq())
-    assert(stub.traceTh === stub.unset)
-    }
-
-  test("trace with exception") {
-    val stub = new Slf4jStub()
-    val log = new LoggerFacade(stub)
-    log.trace("abc", exception)
-
-    assert(stub.infoMsg === "")
-    assert(stub.infoArgs === Seq())
-    assert(stub.infoTh === stub.unset)
-
-    assert(stub.warnMsg === "")
-    assert(stub.warnArgs === Seq())
-    assert(stub.warnTh === stub.unset)
-
-    assert(stub.errorMsg === "")
-    assert(stub.errorArgs === Seq())
-    assert(stub.errorTh === stub.unset)
-  
-    assert(stub.debugMsg === "")
-    assert(stub.debugArgs === Seq())
-    assert(stub.debugTh === stub.unset)
-
-    assert(stub.traceMsg === "abc")
-    assert(stub.traceArgs === Seq())
-    assert(stub.traceTh === exception)
     }
 }
 
@@ -300,10 +214,6 @@ class Slf4jStub extends Logger {
   var debugMsg: String = ""
   var debugArgs: Seq[AnyRef] = Seq()
   var debugTh: Throwable = unset
-
-  var traceMsg: String = ""
-  var traceArgs: Seq[AnyRef] = Seq()
-  var traceTh: Throwable = unset
 
   override def warn(msg: String): Unit = ???
 
@@ -411,15 +321,9 @@ class Slf4jStub extends Logger {
 
   override def trace(format: String, arg1: scala.Any, arg2: scala.Any): Unit = ???
 
-  override def trace(format: String, arguments: AnyRef*): Unit = {
-    traceMsg = format
-    traceArgs = arguments.toSeq
-  }
-
-  override def trace(msg: String, t: Throwable): Unit = {
-    traceMsg = msg
-    traceTh = t
-  }
+  override def trace(format: String, arguments: AnyRef*): Unit = ???
+  
+  override def trace(msg: String, t: Throwable): Unit = ???
 
   override def trace(marker: Marker, msg: String): Unit = ???
 

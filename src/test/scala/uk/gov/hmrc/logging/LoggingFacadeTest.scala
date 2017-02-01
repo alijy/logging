@@ -57,10 +57,5 @@ object LoggingFacadeTest extends App {
     lg.debug("T7 {} {}", "a", "b")
     lg.debug("T7 {} {} {}", "a", "b", "c")
     lg.debug("T8", new Exception("foo4"))
-
-    lg.trace("T9 {}", "a")
-    lg.trace("T9 {} {}", "a", "b")
-    lg.trace("T9 {} {} {}", "a", "b", "c")
-    lg.trace("T10", new Exception("foo5"))
   }
 }

@@ -35,10 +35,6 @@ trait SimpleLogger {
   def debug(format: String, arguments: AnyRef*)
 
   def debug(msg: String, t: Throwable)
-
-  def trace(format: String, arguments: AnyRef*)
-
-  def trace(msg: String, t: Throwable)
 }
 
 
@@ -74,13 +70,5 @@ class LoggerFacade(underlying: Logger) extends SimpleLogger {
 
   override def debug(msg: String, t: Throwable) {
     underlying.debug(msg, t)
-  }
-  
-  override def trace(format: String, arguments: AnyRef*) {
-    underlying.trace(format, arguments: _*)
-  }
-
-  override def trace(msg: String, t: Throwable) {
-    underlying.trace(msg, t)
   }
 }

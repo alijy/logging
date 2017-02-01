@@ -59,17 +59,6 @@ object Stdout extends SimpleLogger {
     println("DEBUG: " + msg)
     t.printStackTrace(System.out)
   }
-
-  override def trace(format: String, arguments: AnyRef*) {
-    val tp = MessageFormatter.arrayFormat(format, arguments.toArray)
-    println("TRACE: " + tp.getMessage)
-  }
-
-  override def trace(msg: String, t: Throwable) {
-    println("TRACE: " + msg)
-    t.printStackTrace(System.out)
-  }
-
 }
 
 
@@ -91,10 +80,5 @@ object BlackHole extends SimpleLogger {
 
   override def debug(format: String, arguments: AnyRef*) {}
 
-  override def debug(msg: String, t: Throwable) {}
-
-  override def trace(format: String, arguments: AnyRef*) {}
-
-  override def trace(msg: String, t: Throwable) {}
-  
+  override def debug(msg: String, t: Throwable) {}  
 }
